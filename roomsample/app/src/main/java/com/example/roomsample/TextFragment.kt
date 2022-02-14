@@ -5,16 +5,27 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import com.example.roomsample.databinding.FragmentTextBinding
+import com.example.roomsample.viewmodel.TextViewModel
 
 class TextFragment : Fragment() {
+
+    private lateinit var binding : FragmentTextBinding
+
+    private val viewModel:TextViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_text, container, false)
+        binding = FragmentTextBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
+        return binding.root
     }
+
+
 
 
 }

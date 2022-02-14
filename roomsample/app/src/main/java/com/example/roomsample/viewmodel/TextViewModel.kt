@@ -9,8 +9,11 @@ class TextViewModel:ViewModel() {
 
     val textData :LiveData<String> = _textData
 
+    val editText: MutableLiveData<String> = MutableLiveData<String>("")
+
     fun changeText(){
-        _textData.value = "EditText"
+        _textData.value = editText.value.toString()
+        editText.value = ""
     }
 
 }
