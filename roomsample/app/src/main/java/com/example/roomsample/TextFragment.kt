@@ -39,11 +39,11 @@ class TextFragment : Fragment() {
 
         viewModel.loadSampleDataList()
 
-        binding.button.setOnClickListener {
-            viewModel.changeText()
-            viewModel.saveSampleData(DataModel(viewModel.textData.value.toString()))
-            viewModel.loadSampleDataList()
-        }
+//        binding.button.setOnClickListener {
+//            viewModel.changeText()
+//            viewModel.saveSampleData(DataModel(viewModel.textData.value.toString()))
+//            viewModel.loadSampleDataList()
+//        }
     }
 
 }

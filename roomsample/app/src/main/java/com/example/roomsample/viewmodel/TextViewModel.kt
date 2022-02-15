@@ -21,7 +21,7 @@ class TextViewModel:ViewModel() {
 
     fun changeText(){
         _textData.value = editText.value.toString()
-//        saveSampleData(DataModel(textData.value.toString()))
+        saveSampleData(DataModel(textData.value.toString()))
         editText.value = ""
     }
 
@@ -55,7 +55,7 @@ class TextViewModel:ViewModel() {
                 dao.saveData(SampleEntity(description = data.description))
             }
 
-//            loadSampleDataList()
+            loadSampleDataList()
         }
     }
 
