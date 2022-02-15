@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.roomsample.databinding.FragmentTextBinding
 import com.example.roomsample.recyclerview.CustomRecyclerViewAdapter
+import com.example.roomsample.viewmodel.DataModel
 import com.example.roomsample.viewmodel.TextViewModel
 
 class TextFragment : Fragment() {
@@ -33,12 +34,16 @@ class TextFragment : Fragment() {
 
         val adapter = CustomRecyclerViewAdapter(this, viewModel)
         binding.recyclerView.adapter = adapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL, false)
+        binding.recyclerView.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
+        viewModel.loadSampleDataList()
 
+        binding.button.setOnClickListener {
+            viewModel.changeText()
+            viewModel.saveSampleData(DataModel(viewModel.textData.value.toString()))
+            viewModel.loadSampleDataList()
+        }
     }
-
-
-
 
 }
