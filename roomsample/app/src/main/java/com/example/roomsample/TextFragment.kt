@@ -6,7 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.roomsample.databinding.FragmentTextBinding
+import com.example.roomsample.recyclerview.CustomRecyclerViewAdapter
 import com.example.roomsample.viewmodel.TextViewModel
 
 class TextFragment : Fragment() {
@@ -23,6 +26,16 @@ class TextFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val adapter = CustomRecyclerViewAdapter(this, viewModel)
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL, false)
+
+
     }
 
 
