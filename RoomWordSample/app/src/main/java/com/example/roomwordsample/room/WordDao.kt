@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface WordDao {
+
     @Query("SELECT * FROM word_table ORDER BY word ASC")
     fun getAlphabetizedWords(): Flow<List<Word>>
 
@@ -17,3 +18,4 @@ interface WordDao {
     @Query("DELETE FROM word_table")
     suspend fun deleteAll()
 }
+
