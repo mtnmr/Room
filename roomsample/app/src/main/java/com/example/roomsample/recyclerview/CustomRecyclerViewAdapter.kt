@@ -3,7 +3,6 @@ package com.example.roomsample.recyclerview
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.example.roomsample.R
 import com.example.roomsample.viewmodel.DataModel
@@ -13,9 +12,9 @@ class CustomRecyclerViewAdapter(fragment: Fragment,
                                 viewModel: TextViewModel)
     : RecyclerView.Adapter<ViewHolder>() {
     init {
-        viewModel.dataList.observe(fragment, Observer {items ->
+        viewModel.dataList.observe(fragment) { items ->
             setItems(items)
-        })
+        }
     }
 
     private val items = mutableListOf<DataModel>()
