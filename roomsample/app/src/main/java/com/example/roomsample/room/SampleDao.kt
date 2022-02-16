@@ -8,8 +8,8 @@ import androidx.room.Query
 @Dao
 interface SampleDao {
     @Query("SELECT * FROM sample")
-    fun loadAllData():List<SampleEntity>
+    suspend fun loadAllData():List<SampleEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveData(sampleEntity: SampleEntity)
+    suspend fun saveData(sampleEntity: SampleEntity)
 }
