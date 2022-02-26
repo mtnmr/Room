@@ -1,4 +1,4 @@
-package com.example.inventory
+package com.example.inventory.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.inventory.R
 import com.example.inventory.databinding.FragmentItemDetailBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
@@ -31,8 +32,8 @@ class ItemDetailFragment : Fragment() {
             .setTitle(getString(android.R.string.dialog_alert_title))
             .setMessage(getString(R.string.delete_question))
             .setCancelable(false)
-            .setNegativeButton(getString(R.string.no)){_,_ -> }
-            .setPositiveButton(getString(R.string.yes)){_,_ ->
+            .setNegativeButton(getString(R.string.no)){ _, _ -> }
+            .setPositiveButton(getString(R.string.yes)){ _, _ ->
                 deleteItem()
             }
             .show()
