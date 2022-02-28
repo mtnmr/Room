@@ -53,16 +53,21 @@ class ItemDetailFragment : Fragment() {
 
     private fun bind(item:Item){
         binding.apply {
-            binding.itemName.text = item.itemName
-            binding.itemPrice.text = item.getFormattedPrice()
-            binding.itemCount.text = item.quantityInStock.toString()
+            itemName.text = item.itemName
+            itemPrice.text = item.getFormattedPrice()
+            itemCount.text = item.quantityInStock.toString()
+
+            sellItem.isEnabled = viewModel.isStockAvailable(item)
+            sellItem.setOnClickListener { viewModel.sellItem(item) }
+
+            deleteItem.setOnClickListener { showConfirmationDialog() }
         }
     }
 
 
     private fun showConfirmationDialog(){
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle(getString(android.R.string.dialog_alert_title))
+            .setTitle(getString(R.string.delete_title))
             .setMessage(getString(R.string.delete_question))
             .setCancelable(false)
             .setNegativeButton(getString(R.string.no)){ _, _ -> }
@@ -73,6 +78,7 @@ class ItemDetailFragment : Fragment() {
     }
 
     private fun deleteItem(){
+        viewModel.deleteItem(item)
         findNavController().navigateUp()
     }
 

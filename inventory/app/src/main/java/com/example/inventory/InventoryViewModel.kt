@@ -10,10 +10,6 @@ class InventoryViewModel(private val itemDao: ItemDao) : ViewModel(){
 
     val allItems:LiveData<List<Item>> = itemDao.getItems().asLiveData()
 
-    fun  retrieveItem(id:Int):LiveData<Item>{
-        return itemDao.getItem(id).asLiveData()
-    }
-
     private fun insertItem(item: Item) {
         viewModelScope.launch {
             itemDao.insert(item)
@@ -38,6 +34,36 @@ class InventoryViewModel(private val itemDao: ItemDao) : ViewModel(){
             return false
         }
         return true
+    }
+
+    //itemDetailに表示するitemを取得
+    fun  retrieveItem(id:Int):LiveData<Item>{
+        return itemDao.getItem(id).asLiveData()
+    }
+
+    //itemの内容を更新
+    private fun updateItem(item:Item){
+        viewModelScope.launch {
+            itemDao.update(item)
+        }
+    }
+
+    fun sellItem(item:Item){
+        if (item.quantityInStock > 0){
+            val newItem = item.copy(quantityInStock = item.quantityInStock - 1)
+            updateItem(newItem)
+        }
+    }
+
+    fun isStockAvailable(item: Item):Boolean{
+        return (item.quantityInStock > 0)
+    }
+
+
+    fun deleteItem(item: Item){
+        viewModelScope.launch {
+            itemDao.delete(item)
+        }
     }
 
 }
