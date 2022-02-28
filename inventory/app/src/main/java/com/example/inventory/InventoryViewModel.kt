@@ -16,6 +16,7 @@ class InventoryViewModel(private val itemDao: ItemDao) : ViewModel(){
         }
     }
 
+    //新しいitemを追加
     private fun getNewItemEntry(itemName: String, itemPrice: String, itemCount: String): Item {
         return Item(
             itemName = itemName,
@@ -41,7 +42,32 @@ class InventoryViewModel(private val itemDao: ItemDao) : ViewModel(){
         return itemDao.getItem(id).asLiveData()
     }
 
-    //itemの内容を更新
+    //itemの更新(editItemで変更した内容に更新する)
+    private fun getUpdatedItemEntry(
+        itemId: Int,
+        itemName: String,
+        itemPrice: String,
+        itemCount: String
+    ):Item{
+        return Item(
+            id = itemId,
+            itemName = itemName,
+            itemPrice = itemPrice.toDouble(),
+            quantityInStock = itemCount.toInt()
+        )
+    }
+
+    fun updateItem(
+        itemId: Int,
+        itemName: String,
+        itemPrice: String,
+        itemCount: String
+    ){
+        val updatedItem = getUpdatedItemEntry(itemId, itemName,itemPrice, itemCount)
+        updateItem(updatedItem)
+    }
+
+    //itemの内容を更新(sellボタンクリック時の更新)
     private fun updateItem(item:Item){
         viewModelScope.launch {
             itemDao.update(item)
@@ -59,7 +85,7 @@ class InventoryViewModel(private val itemDao: ItemDao) : ViewModel(){
         return (item.quantityInStock > 0)
     }
 
-
+    //itemの削除
     fun deleteItem(item: Item){
         viewModelScope.launch {
             itemDao.delete(item)

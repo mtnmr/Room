@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -43,11 +44,33 @@ class AddItemFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.saveAction.setOnClickListener {
-            addNewItem()
+
+        val id = navigationArgs.itemId
+        if (id > 0){
+            viewModel.retrieveItem(id).observe(this.viewLifecycleOwner){ selectedItem ->
+                item = selectedItem
+                bind(item)
+            }
+        }else{
+            binding.saveAction.setOnClickListener {
+                addNewItem()
+            }
         }
     }
 
+    private fun bind(item:Item){
+        val price = "%.2f".format(item.itemPrice)
+
+        binding.apply {
+            itemName.setText(item.itemName, TextView.BufferType.SPANNABLE)
+            itemPrice.setText(price, TextView.BufferType.SPANNABLE)
+            itemCount.setText(item.quantityInStock.toString(), TextView.BufferType.SPANNABLE)
+
+            saveAction.setOnClickListener { updateItem() }
+        }
+    }
+
+    //全てに入力されているか確認して新しくItemを登録する
     private fun isEntryValid():Boolean{
         return viewModel.isEntryValid(
             binding.itemName.text.toString(),
@@ -68,6 +91,20 @@ class AddItemFragment : Fragment() {
         }
     }
 
+    //navArgsで受け取ったid > 0の時、既にあるItemを更新する
+    private fun updateItem(){
+        if (isEntryValid()){
+            viewModel.updateItem(
+                this.navigationArgs.itemId,
+                this.binding.itemName.text.toString(),
+                this.binding.itemPrice.text.toString(),
+                this.binding.itemCount.text.toString()
+            )
+
+            val action = AddItemFragmentDirections.actionAddItemFragmentToItemListFragment()
+            this.findNavController().navigate(action)
+        }
+    }
 
 
     override fun onDestroyView() {

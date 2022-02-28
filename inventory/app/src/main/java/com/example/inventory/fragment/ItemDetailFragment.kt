@@ -61,6 +61,8 @@ class ItemDetailFragment : Fragment() {
             sellItem.setOnClickListener { viewModel.sellItem(item) }
 
             deleteItem.setOnClickListener { showConfirmationDialog() }
+
+            editItem.setOnClickListener { editItem() }
         }
     }
 
@@ -81,6 +83,15 @@ class ItemDetailFragment : Fragment() {
         viewModel.deleteItem(item)
         findNavController().navigateUp()
     }
+
+    private fun editItem(){
+        val action = ItemDetailFragmentDirections.actionItemDetailFragmentToAddItemFragment(
+            getString(R.string.add_fragment_title),
+            item.id
+        )
+        this.findNavController().navigate(action)
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
