@@ -19,7 +19,7 @@ class BusStopAdapter(private val onItemClicked:(Schedule) -> Unit)
         fun bind(schedule: Schedule){
             binding.stopNameTextView.text = schedule.stopName
             binding.arrivalTimeTextView.text = SimpleDateFormat(
-                "h:mm a").format(Date(schedule.arrivalTime.toLong() * 1000))
+                "h:mm a", Locale.ENGLISH).format(Date(schedule.arrivalTime.toLong() * 1000))
         }
     }
 
