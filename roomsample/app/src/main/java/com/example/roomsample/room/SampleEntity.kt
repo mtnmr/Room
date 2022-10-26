@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "sample")
 data class SampleEntity(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true) val id:Int = 0,
     @ColumnInfo(name = "description")
     val description: String
 )

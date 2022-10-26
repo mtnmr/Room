@@ -7,9 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.roomsample.databinding.FragmentTextBinding
 import com.example.roomsample.recyclerview.CustomRecyclerViewAdapter
+import com.example.roomsample.room.SampleEntity
 import com.example.roomsample.viewmodel.DataModel
 import com.example.roomsample.viewmodel.TextViewModel
 
@@ -18,6 +18,8 @@ class TextFragment : Fragment() {
     private lateinit var binding : FragmentTextBinding
 
     private val viewModel:TextViewModel by activityViewModels()
+
+    private var dataList = mutableListOf<SampleEntity>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,12 +34,18 @@ class TextFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = CustomRecyclerViewAdapter(this, viewModel)
+        val adapter = CustomRecyclerViewAdapter(dataList)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-        viewModel.loadSampleDataList()
+        viewModel.dataList.observe(this.viewLifecycleOwner){
+            dataList.clear()
+            it.forEach { item ->
+                dataList.add(item)
+            }
+            adapter.notifyDataSetChanged()
+        }
 
 //        binding.button.setOnClickListener {
 //            viewModel.changeText()

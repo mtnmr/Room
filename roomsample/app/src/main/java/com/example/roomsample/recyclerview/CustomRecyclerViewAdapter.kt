@@ -5,19 +5,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.roomsample.R
+import com.example.roomsample.room.SampleEntity
 import com.example.roomsample.viewmodel.DataModel
 import com.example.roomsample.viewmodel.TextViewModel
 
-class CustomRecyclerViewAdapter(fragment: Fragment,
-                                viewModel: TextViewModel)
-    : RecyclerView.Adapter<ViewHolder>() {
-    init {
-        viewModel.dataList.observe(fragment) { items ->
-            setItems(items)
-        }
-    }
+class CustomRecyclerViewAdapter(items: List<SampleEntity>) : RecyclerView.Adapter<ViewHolder>() {
 
-    private val items = mutableListOf<DataModel>()
+    private val items = items
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.one_data, parent, false)
@@ -30,15 +24,6 @@ class CustomRecyclerViewAdapter(fragment: Fragment,
 
     override fun getItemCount(): Int {
         return items.size
-    }
-
-    private fun setItems(items:List<DataModel>){
-        this.items.clear()
-        items.forEach(){ item ->
-            this.items.add(item)
-        }
-
-        notifyDataSetChanged()
     }
 }
 
