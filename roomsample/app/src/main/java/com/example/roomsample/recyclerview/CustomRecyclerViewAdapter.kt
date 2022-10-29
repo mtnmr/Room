@@ -8,6 +8,7 @@ import com.example.roomsample.R
 import com.example.roomsample.room.SampleEntity
 import com.example.roomsample.viewmodel.DataModel
 import com.example.roomsample.viewmodel.TextViewModel
+import java.text.SimpleDateFormat
 
 class CustomRecyclerViewAdapter(items: List<SampleEntity>) : RecyclerView.Adapter<ViewHolder>() {
 
@@ -19,7 +20,9 @@ class CustomRecyclerViewAdapter(items: List<SampleEntity>) : RecyclerView.Adapte
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.dataText?.text = items[position].description
+        val item = items[position]
+        holder.dataText?.text = item.description
+        holder.createdAt?.text = SimpleDateFormat("yyyy-MM-dd HH:mm").format(item.createdAt)
     }
 
     override fun getItemCount(): Int {

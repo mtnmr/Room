@@ -7,8 +7,10 @@ import com.example.roomsample.R
 
 class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView) {
     var dataText: TextView? = null
+    var createdAt:TextView? = null
 
     init{
         dataText = itemView.findViewById(R.id.dataText)
+        createdAt = itemView.findViewById(R.id.createdAt)
     }
 }

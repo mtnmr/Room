@@ -9,6 +9,8 @@ import com.example.roomsample.room.SampleEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.time.LocalDateTime
+import java.util.*
 
 class TextViewModel:ViewModel() {
     private val _textData = MutableLiveData<String>()
@@ -41,7 +43,7 @@ class TextViewModel:ViewModel() {
     private fun saveSampleData(text:String){
         viewModelScope.launch {
             if(text != ""){
-                dao.saveData(SampleEntity(description = text))
+                dao.saveData(SampleEntity(description = text, createdAt = Date()))
             }
             loadSampleDataList()
         }
